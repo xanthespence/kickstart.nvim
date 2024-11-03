@@ -236,9 +236,9 @@ require('lazy').setup({
     lazy = false,
     event = { 'InsertEnter' },
     config = function()
-      vim.g.UltiSnipsExpandTrigger = '<tab>'
-      vim.g.UltiSnipsJumpForwardTrigger = '<tab>'
-      vim.g.UltiSnipsJumpBackwardTrigger = '<s-tab>'
+      vim.g.UltiSnipsExpandTrigger = '<c-j>'
+      vim.g.UltiSnipsJumpForwardTrigger = '<c-k>'
+      vim.g.UltiSnipsJumpBackwardTrigger = '<c-l>'
       --vim.g.python3_host_prog = '/opt/homebrew/bin/python3'
       vim.g.python3_host_prog = '~/.config/nvim/venv/bin/python3'
     end,
@@ -247,6 +247,7 @@ require('lazy').setup({
   {
     'lervag/vimtex',
     lazy = false,
+    ft = { 'tex' },
     init = function()
       vim.g.vimtex_view_method = 'skim'
     end,
@@ -974,3 +975,11 @@ require('lazy').setup({
 })
 
 vim.g.vimtex_quickfix_mode = 0
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'tex', 'latex' },
+  callback = function()
+    vim.cmd 'runtime! ftplugin/tex.vim'
+    vim.cmd 'runtime! syntax/tex.vim'
+  end,
+})
